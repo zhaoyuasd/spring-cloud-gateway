@@ -42,6 +42,7 @@ public class PredicateDefinition {
 	}
 
 	public PredicateDefinition(String text) {
+		System.out.println("PredicateDefinition:"+text);
 		int eqIdx = text.indexOf("=");
 		if (eqIdx <= 0) {
 			throw new ValidationException("Unable to parse PredicateDefinition text '" + text + "'" +

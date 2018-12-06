@@ -33,7 +33,7 @@ import org.springframework.validation.annotation.Validated;
 /**
  * @author Spencer Gibb
  */
-@ConfigurationProperties("spring.cloud.gateway")
+@ConfigurationProperties("spring.cloud.gateway") //这个标记的意思是 配置文件中以这个开头的属性 会自动 写到该类中
 @Validated
 public class GatewayProperties {
 
@@ -41,7 +41,8 @@ public class GatewayProperties {
 	 * List of Routes
 	 */
 	@NotNull
-	@Valid
+	@Valid   
+	//这个在配置文件中配置 容器会将该属性加载到此处
 	private List<RouteDefinition> routes = new ArrayList<>();
 
 	/**

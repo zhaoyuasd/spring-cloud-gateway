@@ -41,6 +41,7 @@ public class FilterDefinition {
 	}
 
 	public FilterDefinition(String text) {
+		System.out.println("FilterDefinition:"+text);
 		int eqIdx = text.indexOf("=");
 		if (eqIdx <= 0) {
 			setName(text);

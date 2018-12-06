@@ -56,6 +56,7 @@ public class RouteDefinition {
 	public RouteDefinition() {}
 
 	public RouteDefinition(String text) {
+		System.out.println("RouteDefinition:"+text);
 		int eqIdx = text.indexOf("=");
 		if (eqIdx <= 0) {
 			throw new ValidationException("Unable to parse RouteDefinition text '" + text + "'" +

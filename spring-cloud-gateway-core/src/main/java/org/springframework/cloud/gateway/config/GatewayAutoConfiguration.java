@@ -142,6 +142,7 @@ public class GatewayAutoConfiguration {
 
 	@Configuration
 	@ConditionalOnClass(HttpClient.class)
+	//配置url的请求头信息 以及请求客户端
 	protected static class NettyConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
@@ -240,12 +241,14 @@ public class GatewayAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
+	//这里读取配置文件中定义的路由配置
 	public PropertiesRouteDefinitionLocator propertiesRouteDefinitionLocator(GatewayProperties properties) {
 		return new PropertiesRouteDefinitionLocator(properties);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean(RouteDefinitionRepository.class)
+	// 这个应该是路由信息存储把
 	public InMemoryRouteDefinitionRepository inMemoryRouteDefinitionRepository() {
 		return new InMemoryRouteDefinitionRepository();
 	}
@@ -253,6 +256,7 @@ public class GatewayAutoConfiguration {
 	@Bean
 	@Primary
 	public RouteDefinitionLocator routeDefinitionLocator(List<RouteDefinitionLocator> routeDefinitionLocators) {
+		routeDefinitionLocators.forEach(e->System.out.println(e.getClass().getName()));	
 		return new CompositeRouteDefinitionLocator(Flux.fromIterable(routeDefinitionLocators));
 	}
 
@@ -272,12 +276,14 @@ public class GatewayAutoConfiguration {
 	}
 
 	@Bean
+	//路由信息更新   ApplicationEventPublisher 这个容器自带
 	public RouteRefreshListener routeRefreshListener(ApplicationEventPublisher publisher) {
 		return new RouteRefreshListener(publisher);
 	}
 
 	@Bean
 	public FilteringWebHandler filteringWebHandler(List<GlobalFilter> globalFilters) {
+		globalFilters.forEach(e->System.out.println("FilteringWebHandler:"+e.getClass().getName()));
 		return new FilteringWebHandler(globalFilters);
 	}
 
@@ -300,7 +306,6 @@ public class GatewayAutoConfiguration {
 	}
 
 	// HttpHeaderFilter beans
-
 	@Bean
 	@ConditionalOnProperty(name = "spring.cloud.gateway.forwarded.enabled", matchIfMissing = true)
 	public ForwardedHeadersFilter forwardedHeadersFilter() {
@@ -320,7 +325,6 @@ public class GatewayAutoConfiguration {
 
 
 	// GlobalFilter beans
-
 	@Bean
 	public AdaptCachedBodyGlobalFilter adaptCachedBodyGlobalFilter() {
 		return new AdaptCachedBodyGlobalFilter();
