@@ -50,10 +50,19 @@
 		<java.version>1.8</java.version>
 		<spring-cloud-commons.version>2.0.1.BUILD-SNAPSHOT</spring-cloud-commons.version>
 		<spring-cloud-netflix.version>2.0.1.BUILD-SNAPSHOT</spring-cloud-netflix.version>
+		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-gateway-dependencies</artifactId>
@@ -122,6 +131,7 @@
 		<module>spring-cloud-starter-gateway</module>
 		<module>spring-cloud-gateway-sample</module>
 		<module>docs</module>
+		<module>gateway-myself-demo</module>
 	</modules>
 
 	<profiles>

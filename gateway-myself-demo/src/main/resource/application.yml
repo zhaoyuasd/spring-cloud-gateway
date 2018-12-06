@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: zookeeper-gateway
+  cloud:
+    zookeeper:
+      discovery:
+        root: /zk-service
+       # register: false
+      connect-string: 127.0.0.1:2181
+    gateway:
+          routes:
+          - id: rewritepath_route
+            uri: lb://has-zk-app
+            predicates:
+            - Path=/foo/**
+            filters:
+            - RewritePath=/foo/(?<segment>.*), /$\{segment}
+server:
+  port: 8888
+management:
+  endpoints:
+    web:
+      #base-path: "/actuator"
+      exposure:
+        include: "*"
