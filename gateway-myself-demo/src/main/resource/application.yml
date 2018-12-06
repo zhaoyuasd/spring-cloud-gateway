@@ -15,6 +15,9 @@ spring:
             - Path=/foo/**
             filters:
             - RewritePath=/foo/(?<segment>.*), /$\{segment}
+logging:
+  level:
+    org.springframework.cloud.gateway: debug            
 server:
   port: 8888
 management:
