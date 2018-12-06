@@ -239,12 +239,6 @@ public class GatewayAutoConfiguration {
 		return new RouteLocatorBuilder(context);
 	}
 
-	@Bean
-	@ConditionalOnMissingBean
-	//这里读取配置文件中定义的路由配置
-	public PropertiesRouteDefinitionLocator propertiesRouteDefinitionLocator(GatewayProperties properties) {
-		return new PropertiesRouteDefinitionLocator(properties);
-	}
 
 	@Bean
 	@ConditionalOnMissingBean(RouteDefinitionRepository.class)
@@ -256,15 +250,25 @@ public class GatewayAutoConfiguration {
 	@Bean
 	@Primary
 	public RouteDefinitionLocator routeDefinitionLocator(List<RouteDefinitionLocator> routeDefinitionLocators) {
-		routeDefinitionLocators.forEach(e->System.out.println(e.getClass().getName()));	
+		routeDefinitionLocators.forEach(e->System.out.println("routeDefinitionLocator:"+e.getClass().getName()));	
 		return new CompositeRouteDefinitionLocator(Flux.fromIterable(routeDefinitionLocators));
 	}
 
 	@Bean
+	@ConditionalOnMissingBean
+	//这里读取配置文件中定义的路由配置
+	public PropertiesRouteDefinitionLocator propertiesRouteDefinitionLocator(GatewayProperties properties) {
+		return new PropertiesRouteDefinitionLocator(properties);
+	}
+	@Bean
 	public RouteLocator routeDefinitionRouteLocator(GatewayProperties properties,
 												   List<GatewayFilterFactory> GatewayFilters,
 												   List<RoutePredicateFactory> predicates,
-												   RouteDefinitionLocator routeDefinitionLocator) {
+												   RouteDefinitionLocator routeDefinitionLocator 
+												   ) {
+		System.out.println("routeDefinitionRouteLocator:"+routeDefinitionLocator.getClass().getName());
+		GatewayFilters.forEach(e->System.out.println("routeDefinitionRouteLocator:"+e.getClass().getName()));	
+		predicates.forEach(e->System.out.println("routeDefinitionRouteLocator:"+e.getClass().getName()));	
 		return new RouteDefinitionRouteLocator(routeDefinitionLocator, predicates, GatewayFilters, properties);
 	}
 
@@ -272,6 +276,7 @@ public class GatewayAutoConfiguration {
 	@Primary
 	//TODO: property to disable composite?
 	public RouteLocator cachedCompositeRouteLocator(List<RouteLocator> routeLocators) {
+		routeLocators.forEach(e->System.out.println("cachedCompositeRouteLocator:"+e.getClass().getName()));
 		return new CachingRouteLocator(new CompositeRouteLocator(Flux.fromIterable(routeLocators)));
 	}
 
@@ -281,7 +286,17 @@ public class GatewayAutoConfiguration {
 		return new RouteRefreshListener(publisher);
 	}
 
-	@Bean
+	@Bean 
+	/**  注册一堆过滤器
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.AdaptCachedBodyGlobalFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.NettyWriteResponseFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.ForwardPathFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.RouteToRequestUrlFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.LoadBalancerClientFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.WebsocketRoutingFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.NettyRoutingFilter
+	FilteringWebHandler:org.springframework.cloud.gateway.filter.ForwardRoutingFilter
+	*/
 	public FilteringWebHandler filteringWebHandler(List<GlobalFilter> globalFilters) {
 		globalFilters.forEach(e->System.out.println("FilteringWebHandler:"+e.getClass().getName()));
 		return new FilteringWebHandler(globalFilters);
@@ -290,6 +305,8 @@ public class GatewayAutoConfiguration {
 	@Bean
 	public RoutePredicateHandlerMapping routePredicateHandlerMapping(FilteringWebHandler webHandler,
 																	   RouteLocator routeLocator) {
+		System.out.println("routePredicateHandlerMapping:"+webHandler.getClass().getName());
+		System.out.println("routePredicateHandlerMapping:"+webHandler.getClass().getName());
 		return new RoutePredicateHandlerMapping(webHandler, routeLocator);
 	}
 
