@@ -46,6 +46,7 @@ import static org.springframework.cloud.gateway.support.NameUtils.normalizeRoute
 @Configuration
 @ConditionalOnProperty(name = "spring.cloud.gateway.enabled", matchIfMissing = true)
 @AutoConfigureBefore(GatewayAutoConfiguration.class)
+ //这里 DispatcherHandler 是这个模块的入口
 @ConditionalOnClass({DispatcherHandler.class, DiscoveryClient.class})
 @EnableConfigurationProperties
 public class GatewayDiscoveryClientAutoConfiguration {

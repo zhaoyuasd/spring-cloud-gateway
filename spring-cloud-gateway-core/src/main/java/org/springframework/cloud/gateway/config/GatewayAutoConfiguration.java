@@ -250,7 +250,7 @@ public class GatewayAutoConfiguration {
 	@Bean
 	@Primary
 	public RouteDefinitionLocator routeDefinitionLocator(List<RouteDefinitionLocator> routeDefinitionLocators) {
-		routeDefinitionLocators.forEach(e->System.out.println("routeDefinitionLocator:"+e.getClass().getName()));	
+		routeDefinitionLocators.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionLocator:"+e.getClass().getName()));	
 		return new CompositeRouteDefinitionLocator(Flux.fromIterable(routeDefinitionLocators));
 	}
 
@@ -266,9 +266,9 @@ public class GatewayAutoConfiguration {
 												   List<RoutePredicateFactory> predicates,
 												   RouteDefinitionLocator routeDefinitionLocator 
 												   ) {
-		System.out.println("routeDefinitionRouteLocator:"+routeDefinitionLocator.getClass().getName());
-		GatewayFilters.forEach(e->System.out.println("routeDefinitionRouteLocator:"+e.getClass().getName()));	
-		predicates.forEach(e->System.out.println("routeDefinitionRouteLocator:"+e.getClass().getName()));	
+		System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+routeDefinitionLocator.getClass().getName());
+		GatewayFilters.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+e.getClass().getName()));	
+		predicates.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+e.getClass().getName()));	
 		return new RouteDefinitionRouteLocator(routeDefinitionLocator, predicates, GatewayFilters, properties);
 	}
 
@@ -276,7 +276,7 @@ public class GatewayAutoConfiguration {
 	@Primary
 	//TODO: property to disable composite?
 	public RouteLocator cachedCompositeRouteLocator(List<RouteLocator> routeLocators) {
-		routeLocators.forEach(e->System.out.println("cachedCompositeRouteLocator:"+e.getClass().getName()));
+		routeLocators.forEach(e->System.out.println("GatewayAutoConfiguration-->>cachedCompositeRouteLocator:"+e.getClass().getName()));
 		return new CachingRouteLocator(new CompositeRouteLocator(Flux.fromIterable(routeLocators)));
 	}
 
@@ -298,15 +298,15 @@ public class GatewayAutoConfiguration {
 	FilteringWebHandler:org.springframework.cloud.gateway.filter.ForwardRoutingFilter
 	*/
 	public FilteringWebHandler filteringWebHandler(List<GlobalFilter> globalFilters) {
-		globalFilters.forEach(e->System.out.println("FilteringWebHandler:"+e.getClass().getName()));
+		globalFilters.forEach(e->System.out.println("GatewayAutoConfiguration-->>FilteringWebHandler:"+e.getClass().getName()));
 		return new FilteringWebHandler(globalFilters);
 	}
 
 	@Bean
 	public RoutePredicateHandlerMapping routePredicateHandlerMapping(FilteringWebHandler webHandler,
 																	   RouteLocator routeLocator) {
-		System.out.println("routePredicateHandlerMapping:"+webHandler.getClass().getName());
-		System.out.println("routePredicateHandlerMapping:"+webHandler.getClass().getName());
+		System.out.println("GatewayAutoConfiguration-->>routePredicateHandlerMapping:"+webHandler.getClass().getName());
+		System.out.println("GatewayAutoConfiguration-->>routePredicateHandlerMapping:"+routeLocator.getClass().getName());
 		return new RoutePredicateHandlerMapping(webHandler, routeLocator);
 	}
 

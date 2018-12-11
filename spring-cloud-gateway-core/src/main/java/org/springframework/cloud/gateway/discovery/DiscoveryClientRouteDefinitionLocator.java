@@ -53,6 +53,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 		} else {
 			this.routeIdPrefix = this.discoveryClient.getClass().getSimpleName() + "_";
 		}
+		System.out.println("------------this.routeIdPrefix  is :"+this.routeIdPrefix);
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
                     routeDefinition.setId(this.routeIdPrefix + serviceId);
 					String uri = urlExpr.getValue(evalCtxt, instance, String.class);
 					routeDefinition.setUri(URI.create(uri));
-
+					System.out.println("------------>>>"+routeDefinition);
 					final ServiceInstance instanceForEval = new DelegatingServiceInstance(instance, properties);
 
 					for (PredicateDefinition original : this.properties.getPredicates()) {
@@ -95,6 +96,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 							predicate.addArg(entry.getKey(), value);
 						}
 						routeDefinition.getPredicates().add(predicate);
+						System.out.println("------------>>>"+routeDefinition);
 					}
 
                     for (FilterDefinition original : this.properties.getFilters()) {
@@ -105,6 +107,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 							filter.addArg(entry.getKey(), value);
 						}
 						routeDefinition.getFilters().add(filter);
+						System.out.println("------------>>>"+routeDefinition);
 					}
 
                     return routeDefinition;

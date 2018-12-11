@@ -17,10 +17,10 @@ spring:
             - RewritePath=/foo/(?<segment>.*), /$\{segment}
 logging:
   level:
-    org.springframework.cloud.gateway: debug            
+    org.springframework: ERROR            
 server:
   port: 8888
-management:
+management: 
   endpoints:
     web:
       #base-path: "/actuator"
