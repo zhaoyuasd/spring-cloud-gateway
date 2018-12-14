@@ -43,12 +43,16 @@ import org.springframework.web.reactive.result.method.annotation.ArgumentResolve
 @ConditionalOnClass({ HandlerMethodReturnValueHandler.class })
 @EnableConfigurationProperties(ProxyProperties.class)
 public class ProxyResponseAutoConfiguration implements WebFluxConfigurer {
-
+   static {
+	   
+	   System.out.println("ProxyResponseAutoConfiguration  is init");
+	   
+   }
 	@Autowired
 	private ApplicationContext context;
 
 	@Bean
-	@ConditionalOnMissingBean
+	//@ConditionalOnMissingBean
 	public ProxyExchangeArgumentResolver proxyExchangeArgumentResolver(
 			Optional<WebClient.Builder> optional, ProxyProperties proxy) {
 		WebClient.Builder builder = optional.orElse(WebClient.builder());
@@ -57,6 +61,7 @@ public class ProxyResponseAutoConfiguration implements WebFluxConfigurer {
 				template);
 		resolver.setHeaders(proxy.convertHeaders());
 		resolver.setSensitive(proxy.getSensitive()); // can be null
+		 System.out.println("ProxyExchangeArgumentResolver  is init");
 		return resolver;
 	}
 

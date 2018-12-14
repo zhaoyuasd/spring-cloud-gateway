@@ -22,22 +22,22 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.springframework.cloud</groupId>
+				<groupId>org.springframework.cloud.zy</groupId>
 				<artifactId>spring-cloud-gateway-webflux</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework.cloud</groupId>
+				<groupId>org.springframework.cloud.zy</groupId>
 				<artifactId>spring-cloud-gateway-mvc</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework.cloud</groupId>
+				<groupId>org.springframework.cloud.zy</groupId>
 				<artifactId>spring-cloud-gateway-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework.cloud</groupId>
+				<groupId>org.springframework.cloud.zy</groupId>
 				<artifactId>spring-cloud-starter-gateway</artifactId>
 				<version>${project.version}</version>
 			</dependency>

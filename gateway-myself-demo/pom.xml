@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>org.springframework.cloud.zy</groupId>
     <artifactId>spring-cloud-gateway</artifactId>
     <version>2.0.1.BUILD-SNAPSHOT</version>
   </parent>
@@ -17,18 +17,19 @@
   </properties>
   <dependencies>
    <dependency>
-     <groupId>org.springframework.cloud</groupId>
+     <groupId>org.springframework.cloud.zy</groupId>
      <artifactId>spring-cloud-gateway-core</artifactId>
      <version>${project.version}</version>
    </dependency>
    
-   <!--  <dependency>
-     <groupId>org.springframework.cloud</groupId>
+    <!-- <dependency>
+        这里  webflux 和mvc同时引入会引起冲突 只能引入一个
+     <groupId>org.springframework.cloud.zy</groupId>
      <artifactId>spring-cloud-gateway-mvc</artifactId>
      <version>${project.version}</version>
-   </dependency> -->
+   </dependency>   -->
     <dependency>
-     <groupId>org.springframework.cloud</groupId>
+     <groupId>org.springframework.cloud.zy</groupId>
      <artifactId>spring-cloud-gateway-webflux</artifactId>
      <version>${project.version}</version>
    </dependency>
@@ -46,6 +47,7 @@
     <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+			<version>2.0.0.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.zookeeper</groupId>
