@@ -214,8 +214,9 @@ public class RouteDefinitionRouteLocator implements RouteLocator, BeanFactoryAwa
 		if (logger.isDebugEnabled()) {
 			logger.debug("RouteDefinition " + route.getId() + " applying "
 					+ args + " to " + predicate.getName());
+			
 		}
-
+        System.out.println("RouteDefinition " + route.getId() + " applying "+ args + " to " + predicate.getName());
         Map<String, Object> properties = factory.shortcutType().normalize(args, factory, this.parser, this.beanFactory);
         Object config = factory.newConfig();
         ConfigurationUtils.bind(config, properties,

@@ -57,6 +57,7 @@ public class RouteRefreshListener
 			HeartbeatEvent e = (HeartbeatEvent) event;
 			resetIfNeeded(e.getValue());
 		}
+		System.out.println("onApplicationEvent:"+event.getSource());
 	}
 
 	private void resetIfNeeded(Object value) {

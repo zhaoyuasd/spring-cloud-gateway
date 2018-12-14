@@ -138,6 +138,7 @@ import static org.springframework.cloud.gateway.config.HttpClientProperties.Pool
 @AutoConfigureBefore(HttpHandlerAutoConfiguration.class)
 @AutoConfigureAfter({GatewayLoadBalancerClientAutoConfiguration.class, GatewayClassPathWarningAutoConfiguration.class})
 @ConditionalOnClass(DispatcherHandler.class)
+// DispatcherHandler.handle 是这个模块的入口
 public class GatewayAutoConfiguration {
 
 	@Configuration
