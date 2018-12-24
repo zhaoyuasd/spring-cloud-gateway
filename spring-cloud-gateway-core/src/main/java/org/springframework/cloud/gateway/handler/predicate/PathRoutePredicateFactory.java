@@ -77,11 +77,12 @@ public class PathRoutePredicateFactory extends AbstractRoutePredicateFactory<Pat
 	}
 
 	private static void traceMatch(String prefix, Object desired, Object actual, boolean match) {
+		String message = String.format("%s \"%s\" %s against value \"%s\"",
+				prefix, desired, match ? "matches" : "does not match", actual);
 		if (log.isTraceEnabled()) {
-			String message = String.format("%s \"%s\" %s against value \"%s\"",
-					prefix, desired, match ? "matches" : "does not match", actual);
 			log.trace(message);
 		}
+		System.out.println(message);
 	}
 
 	@Validated

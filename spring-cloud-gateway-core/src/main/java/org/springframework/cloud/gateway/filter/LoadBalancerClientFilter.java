@@ -62,9 +62,11 @@ public class LoadBalancerClientFilter implements GlobalFilter, Ordered {
 			return chain.filter(exchange);
 		}
 		//preserve the original url
+		System.out.println("url:"+url);
+		System.out.println("schemePrefix:"+schemePrefix);
 		addOriginalRequestUrl(exchange, url);
 
-		log.trace("LoadBalancerClientFilter url before: " + url);
+		log.error("LoadBalancerClientFilter url before: " + url);
 
 		final ServiceInstance instance = loadBalancer.choose(url.getHost());
 

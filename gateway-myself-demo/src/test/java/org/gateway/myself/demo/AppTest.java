@@ -69,7 +69,15 @@ public class AppTest
 		cc.setTime(d1);
 		System.out.println(cc.get(Calendar.DAY_OF_WEEK));*/
     	
-    	System.out.println("2018-01-26".compareTo("2018-01-29"));
-    	System.out.println("2018-01-30 10:20:36".compareTo("2018-01-29 10:20:36"));
+    	/*System.out.println("2018-01-26".compareTo("2018-01-29"));
+    	System.out.println("2018-01-30 10:20:36".compareTo("2018-01-29 10:20:36"));*/
+    	
+    	String as="asd|||asd";
+    	
+    	String[] ss=as.split("|");
+    	for(String s:ss)
+    	System.out.println(s);
+    	
+    	System.out.println(ss.toString());
 	}
 }

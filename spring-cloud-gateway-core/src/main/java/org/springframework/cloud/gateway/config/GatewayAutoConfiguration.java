@@ -131,6 +131,11 @@ import static org.springframework.cloud.gateway.config.HttpClientProperties.Pool
 
 /**
  * @author Spencer Gibb
+ * predict 找到处理该请求的路由配置
+ * fliter  对该请求参数或者路径或者别的进行修改
+ *  ？？         缓存已存在的路由信息 不用每次去找
+ *  ？？         获取注册服务的信息替换url的id
+ *  
  */
 @Configuration
 @ConditionalOnProperty(name = "spring.cloud.gateway.enabled", matchIfMissing = true)
@@ -251,13 +256,14 @@ public class GatewayAutoConfiguration {
 	@Bean
 	@Primary
 	public RouteDefinitionLocator routeDefinitionLocator(List<RouteDefinitionLocator> routeDefinitionLocators) {
-		routeDefinitionLocators.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionLocator:"+e.getClass().getName()));	
+		//routeDefinitionLocators.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionLocator:"+e.getClass().getName()));	
 		return new CompositeRouteDefinitionLocator(Flux.fromIterable(routeDefinitionLocators));
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
 	//这里读取配置文件中定义的路由配置
+	// 这里这个是路由的入口 路由的配置全在这里面  同样的会有一些通用的 路由配置
 	public PropertiesRouteDefinitionLocator propertiesRouteDefinitionLocator(GatewayProperties properties) {
 		return new PropertiesRouteDefinitionLocator(properties);
 	}
@@ -267,9 +273,9 @@ public class GatewayAutoConfiguration {
 												   List<RoutePredicateFactory> predicates,
 												   RouteDefinitionLocator routeDefinitionLocator 
 												   ) {
-		System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+routeDefinitionLocator.getClass().getName());
-		GatewayFilters.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+e.getClass().getName()));	
-		predicates.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+e.getClass().getName()));	
+		//System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+routeDefinitionLocator.getClass().getName());
+		//GatewayFilters.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+e.getClass().getName()));	
+		//predicates.forEach(e->System.out.println("GatewayAutoConfiguration-->>routeDefinitionRouteLocator:"+e.getClass().getName()));	
 		return new RouteDefinitionRouteLocator(routeDefinitionLocator, predicates, GatewayFilters, properties);
 	}
 
@@ -277,7 +283,7 @@ public class GatewayAutoConfiguration {
 	@Primary
 	//TODO: property to disable composite?
 	public RouteLocator cachedCompositeRouteLocator(List<RouteLocator> routeLocators) {
-		routeLocators.forEach(e->System.out.println("GatewayAutoConfiguration-->>cachedCompositeRouteLocator:"+e.getClass().getName()));
+		//routeLocators.forEach(e->System.out.println("GatewayAutoConfiguration-->>cachedCompositeRouteLocator:"+e.getClass().getName()));
 		return new CachingRouteLocator(new CompositeRouteLocator(Flux.fromIterable(routeLocators)));
 	}
 
@@ -297,17 +303,18 @@ public class GatewayAutoConfiguration {
 	FilteringWebHandler:org.springframework.cloud.gateway.filter.WebsocketRoutingFilter
 	FilteringWebHandler:org.springframework.cloud.gateway.filter.NettyRoutingFilter
 	FilteringWebHandler:org.springframework.cloud.gateway.filter.ForwardRoutingFilter
+        这个里面会准备一些全局的过滤器  过滤器的入口是它
 	*/
 	public FilteringWebHandler filteringWebHandler(List<GlobalFilter> globalFilters) {
-		globalFilters.forEach(e->System.out.println("GatewayAutoConfiguration-->>FilteringWebHandler:"+e.getClass().getName()));
+		//globalFilters.forEach(e->System.out.println("GatewayAutoConfiguration-->>FilteringWebHandler:"+e.getClass().getName()));
 		return new FilteringWebHandler(globalFilters);
 	}
 
 	@Bean
 	public RoutePredicateHandlerMapping routePredicateHandlerMapping(FilteringWebHandler webHandler,
 																	   RouteLocator routeLocator) {
-		System.out.println("GatewayAutoConfiguration-->>routePredicateHandlerMapping:"+webHandler.getClass().getName());
-		System.out.println("GatewayAutoConfiguration-->>routePredicateHandlerMapping:"+routeLocator.getClass().getName());
+		//System.out.println("GatewayAutoConfiguration-->>routePredicateHandlerMapping:"+webHandler.getClass().getName());
+		//System.out.println("GatewayAutoConfiguration-->>routePredicateHandlerMapping:"+routeLocator.getClass().getName());
 		return new RoutePredicateHandlerMapping(webHandler, routeLocator);
 	}
 
@@ -342,7 +349,7 @@ public class GatewayAutoConfiguration {
 	}
 
 
-	// GlobalFilter beans
+	// GlobalFilter beans  
 	@Bean
 	public AdaptCachedBodyGlobalFilter adaptCachedBodyGlobalFilter() {
 		return new AdaptCachedBodyGlobalFilter();

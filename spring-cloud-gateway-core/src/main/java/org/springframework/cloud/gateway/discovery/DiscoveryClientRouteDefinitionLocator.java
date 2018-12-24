@@ -85,7 +85,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
                     routeDefinition.setId(this.routeIdPrefix + serviceId);
 					String uri = urlExpr.getValue(evalCtxt, instance, String.class);
 					routeDefinition.setUri(URI.create(uri));
-					System.out.println("------------>>>"+routeDefinition);
+					System.out.println(uri+"------------>>>"+routeDefinition);
 					final ServiceInstance instanceForEval = new DelegatingServiceInstance(instance, properties);
 
 					for (PredicateDefinition original : this.properties.getPredicates()) {
